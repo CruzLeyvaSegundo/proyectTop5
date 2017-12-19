@@ -1,73 +1,31 @@
 package com.neetogami.criptoapp.Activities;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
-
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoDevice;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserSession;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.AuthenticationContinuation;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.AuthenticationDetails;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.ChallengeContinuation;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.ForgotPasswordContinuation;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.MultiFactorAuthenticationContinuation;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.NewPasswordContinuation;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.ChooseMfaContinuation;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.AuthenticationHandler;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.ForgotPasswordHandler;
-
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import com.neetogami.criptoapp.R;
 import com.neetogami.criptoapp.Utils.AppHelper;
-import com.neetogami.criptoapp.Utils.Util;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     private final String TAG="LoginActivity";
@@ -78,12 +36,6 @@ public class LoginActivity extends AppCompatActivity {
     // Screen fields
     private EditText inUsername;
     private EditText inPassword;
-
-    //Continuations
-    //private MultiFactorAuthenticationContinuation multiFactorAuthenticationContinuation;
-    //private ForgotPasswordContinuation forgotPasswordContinuation;
-    //private NewPasswordContinuation newPasswordContinuation;
-   // private ChooseMfaContinuation mfaOptionsContinuation;
 
     // User Details
     private String username;
@@ -125,10 +77,6 @@ public class LoginActivity extends AppCompatActivity {
         signInUser();
     }
 
-    // Forgot password processing
-    public void forgotPassword(View view) {
-        forgotpasswordUser();
-    }
 
     private void signUpNewUser() {
         Intent registerActivity = new Intent(this, RegisterActivity.class);
@@ -161,26 +109,9 @@ public class LoginActivity extends AppCompatActivity {
         return !TextUtils.isEmpty(password);
     }
 
-    private void forgotpasswordUser() {
-        username = inUsername.getText().toString();
-        if(!isValidEmail(username)) {
-            Toast.makeText(this, "No es valido el email", Toast.LENGTH_LONG).show();
-            return;
-        }
 
-        showWaitDialog("");
-        AppHelper.getPool().getUser(username).forgotPasswordInBackground(forgotPasswordHandler);
-    }
 
 /*
-    private void getForgotPasswordCode(ForgotPasswordContinuation forgotPasswordContinuation) {
-        this.forgotPasswordContinuation = forgotPasswordContinuation;
-        Intent intent = new Intent(this, ForgotPasswordActivity.class);
-        intent.putExtra("destination",forgotPasswordContinuation.getParameters().getDestination());
-        intent.putExtra("deliveryMed", forgotPasswordContinuation.getParameters().getDeliveryMedium());
-        startActivityForResult(intent, 3);
-    }
-    /*
     private void firstTimeSignIn() {
         Intent newPasswordActivity = new Intent(this, NewPassword.class);
         startActivityForResult(newPasswordActivity, 6);
@@ -221,30 +152,6 @@ public class LoginActivity extends AppCompatActivity {
         continuation.continueTask();
     }
 
-    // Callbacks
-    ForgotPasswordHandler forgotPasswordHandler = new ForgotPasswordHandler() {
-        @Override
-        public void onSuccess() {
-            closeWaitDialog();
-            showDialogMessage("Password successfully changed!","");
-            inPassword.setText("");
-            inPassword.requestFocus();
-        }
-
-        @Override
-        public void getResetCode(ForgotPasswordContinuation forgotPasswordContinuation) {
-            closeWaitDialog();
-            //getForgotPasswordCode(forgotPasswordContinuation);
-        }
-
-        @Override
-        public void onFailure(Exception e) {
-            closeWaitDialog();
-            showDialogMessage("Forgot password failed",AppHelper.formatException(e));
-        }
-    };
-
-    //
     AuthenticationHandler authenticationHandler = new AuthenticationHandler() {
         @Override
         public void onSuccess(CognitoUserSession cognitoUserSession, CognitoDevice device) {

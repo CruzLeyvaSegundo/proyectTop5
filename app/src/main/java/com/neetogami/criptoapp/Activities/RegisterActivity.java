@@ -38,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressDialog waitDialog;
     private String usernameInput;
     private String userPasswd;
+    private String nameUser;
 
 
     @Override
@@ -176,6 +177,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
                 String userInput = name.getText().toString();
+                nameUser = userInput;
                 if (userInput != null) {
                     if (userInput.length() > 0) {
                         System.out.println("resultado: ");
@@ -229,6 +231,7 @@ public class RegisterActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SignUpConfirmActivity.class);
         intent.putExtra("source","signup");
         intent.putExtra("name", usernameInput);
+        intent.putExtra("nameUser", nameUser);
         intent.putExtra("destination", cognitoUserCodeDeliveryDetails.getDestination());
         intent.putExtra("deliveryMed", cognitoUserCodeDeliveryDetails.getDeliveryMedium());
         intent.putExtra("attribute", cognitoUserCodeDeliveryDetails.getAttributeName());

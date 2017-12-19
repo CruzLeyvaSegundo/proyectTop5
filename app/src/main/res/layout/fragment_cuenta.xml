@@ -2,66 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.neetogami.criptoapp.Fragments.CuentaFragment">
+    android:orientation="vertical"
+    tools:context="com.neetogami.criptoapp.Fragments.CursosFragment">
 
-    <RelativeLayout
+    <ListView
+        android:id="@+id/listViewCompras"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" />
 
-
-        <RelativeLayout
-            android:id="@+id/wrapper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/btnCreate"
-            android:layout_alignParentTop="true"
-            android:padding="24dp">
-
-
-            <TextView
-                android:id="@+id/textViewName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:text="Person Name" />
-
-
-            <EditText
-                android:id="@+id/editTextName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textViewName"
-                android:layout_marginTop="10dp"
-                android:inputType="textPersonName" />
-
-            <TextView
-                android:id="@+id/textViewCountry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/editTextName"
-                android:layout_marginTop="25dp"
-                android:paddingLeft="5dp"
-                android:text="Person Country" />
-
-            <Spinner
-                android:id="@+id/spinnerCountry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewCountry"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp" />
-
-
-        </RelativeLayout>
-
-        <Button
-            android:id="@+id/btnCreate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@color/colorPrimary"
-            android:text="CREATE PERSON"
-            android:textColor="@android:color/white" />
-
-    </RelativeLayout>
 </FrameLayout>

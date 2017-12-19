@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.neetogami.criptoapp.Fragments.CuentaFragment;
 import com.neetogami.criptoapp.Fragments.CursosFragment;
-import com.neetogami.criptoapp.Fragments.test;
 
 import static com.neetogami.criptoapp.Activities.MainActivity.PERSON_CUENTA_FRAGMENT;
 import static com.neetogami.criptoapp.Activities.MainActivity.PERSON_CURSOS_FRAGMENT;
@@ -15,11 +14,12 @@ import static com.neetogami.criptoapp.Activities.MainActivity.PERSON_CURSOS_FRAG
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     private int numberOfTabs;
+    private String user;
 
-
-    public ViewPagerAdapter(FragmentManager fm, Context context, int numberOfTabs) {
+    public ViewPagerAdapter(FragmentManager fm, Context context, int numberOfTabs, String user) {
         super(fm);
         this.numberOfTabs = numberOfTabs;
+        this.user = user;
     }
 
 
@@ -28,9 +28,18 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
         switch (position) {
             case PERSON_CUENTA_FRAGMENT:
-                return new CuentaFragment();
+                {
+
+                    CuentaFragment cuenta = new CuentaFragment();
+                    cuenta.sendUser(user);
+                    return cuenta;
+                }
             case PERSON_CURSOS_FRAGMENT:
-                return new CursosFragment();
+            {
+                CursosFragment cuenta = new CursosFragment();
+                cuenta.sendUser(user);
+                return cuenta;
+            }
             default:
                 return null;
         }
@@ -40,5 +49,4 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return numberOfTabs;
     }
-
 }

@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:weightSum="1">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -12,7 +13,7 @@
         android:padding="15dp">
 
         <ImageView
-            android:id="@+id/imageViewFlag"
+            android:id="@+id/imageViewCardCredit"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:padding="10dp" />
@@ -21,24 +22,41 @@
 
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
         android:layout_height="80dp"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="15dp">
+        android:padding="15dp"
+        android:layout_weight="0.66">
 
         <TextView
-            android:id="@+id/textViewPersonName"
+            android:id="@+id/textViewCompraName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:textSize="20dp" />
 
         <TextView
-            android:id="@+id/textViewPersonCountry"
+            android:id="@+id/textViewCompraFecha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="60dp"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="15dp"
+        android:layout_weight="0.38">
+
+        <TextView
+            android:id="@+id/textViewCompraPrecio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:textSize="20dp" />
+
+    </LinearLayout>
 </LinearLayout>

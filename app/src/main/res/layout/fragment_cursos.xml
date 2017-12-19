@@ -6,7 +6,7 @@
     tools:context="com.neetogami.criptoapp.Fragments.CursosFragment">
 
     <ListView
-        android:id="@+id/listViewPerson"
+        android:id="@+id/listViewCursos"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

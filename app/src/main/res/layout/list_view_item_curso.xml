@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="65dp"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="15dp">
+        <ImageView
+            android:id="@+id/imageViewFlag"
+            android:layout_width="51dp"
+            android:layout_height="55dp"
+            android:padding="10dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="151dp"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="15dp"
+        android:layout_weight="0.95">
+
+        <TextView
+            android:id="@+id/textViewCursoNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:textSize="17dp" />
+
+        <TextView
+            android:id="@+id/textViewCursoProfesor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="56dp"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_weight="0.08">
+
+        <TextView
+            android:id="@+id/textViewCursoPrecio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="61dp"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/btnBuy"
+            android:layout_width="51dp"
+            android:layout_height="wrap_content"
+            android:text="Buy" />
+    </LinearLayout>
+
+</LinearLayout>

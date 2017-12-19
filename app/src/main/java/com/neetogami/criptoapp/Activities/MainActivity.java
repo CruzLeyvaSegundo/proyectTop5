@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoDevice;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserDetails;
@@ -24,13 +23,14 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserSession
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.GenericHandler;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.GetDetailsHandler;
 import com.neetogami.criptoapp.Adapters.ViewPagerAdapter;
-import com.neetogami.criptoapp.Fragments.CursosFragment;
-import com.neetogami.criptoapp.Interfaces.OnPersonCreated;
-import com.neetogami.criptoapp.Models.Person;
+import com.neetogami.criptoapp.Fragments.CuentaFragment;
+import com.neetogami.criptoapp.Interfaces.OnCursoBuyed;
+import com.neetogami.criptoapp.Models.CompraUser;
+import com.neetogami.criptoapp.Models.Curso;
 import com.neetogami.criptoapp.R;
-
 import com.neetogami.criptoapp.Utils.AppHelper;
-public class MainActivity extends AppCompatActivity implements OnPersonCreated {
+
+public class MainActivity extends AppCompatActivity implements OnCursoBuyed {
 
     private final String TAG="MainActivity";
     private SharedPreferences prefs;
@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements OnPersonCreated {
     private CognitoUser user;
     private CognitoUserSession session;
     private CognitoUserDetails details;
-
     // User details
     private String username;
 
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements OnPersonCreated {
         username = AppHelper.getCurrUser();
         user = AppHelper.getPool().getUser(username);
         getDetails();
-
+        //Toast.makeText(MainActivity.this,"username:" + username,Toast.LENGTH_LONG).show();
         setToolbar();
         setTabLayout();
         setViewPager();
@@ -80,14 +79,14 @@ public class MainActivity extends AppCompatActivity implements OnPersonCreated {
 
     private  void setTabLayout(){
         tabLayout = (TabLayout)findViewById(R.id.tabLayout);
-        tabLayout.addTab(tabLayout.newTab().setText("Cuenta"));
+        tabLayout.addTab(tabLayout.newTab().setText("Compras"));
         tabLayout.addTab(tabLayout.newTab().setText("Cursos"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
     }
 
     private void setViewPager(){
         viewPager = (ViewPager) findViewById(R.id.viewPager);
-        adapter = new ViewPagerAdapter(getSupportFragmentManager(), this, tabLayout.getTabCount());
+        adapter = new ViewPagerAdapter(getSupportFragmentManager(), this, tabLayout.getTabCount(),username);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
     }
@@ -96,6 +95,8 @@ public class MainActivity extends AppCompatActivity implements OnPersonCreated {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
+                //CursosFragment fragment = (CursosFragment) getSupportFragmentManager().getFragments().get(position);
+                //comunicateUser.sendUser(username);
                 viewPager.setCurrentItem(position);
                 //Toast.makeText(MainActivity.this,"selected ->" + tab.getText(),Toast.LENGTH_SHORT).show();
             }
@@ -114,15 +115,16 @@ public class MainActivity extends AppCompatActivity implements OnPersonCreated {
     }
 
     @Override
-    public void createPerson(Person person) {
+    public void buyCurso(CompraUser newCompra) {
         // Obtenemos el fragment deseado, ListFragment, a través de
         // getSupportFragmentManager(), y posteriormente pasamos el índice de posición
         // de dicho fragment
-        CursosFragment fragment = (CursosFragment) getSupportFragmentManager().getFragments().get(PERSON_CURSOS_FRAGMENT);
+        CuentaFragment fragment = (CuentaFragment) getSupportFragmentManager().getFragments().get(PERSON_CUENTA_FRAGMENT);
         // Llamamos al método de nuestro fragment
-        fragment.addPerson(person);
+        fragment.addCompra(newCompra);
         // Movemos el viewpager hacia el ListFragment para ver la persona añadida en el listView
-        viewPager.setCurrentItem(PERSON_CURSOS_FRAGMENT);
+        ///Toast.makeText(MainActivity.this,"Compraste algo" ,Toast.LENGTH_SHORT).show();
+        viewPager.setCurrentItem(PERSON_CUENTA_FRAGMENT);
     }
 
     // Get user details from CIP service
@@ -286,6 +288,7 @@ public class MainActivity extends AppCompatActivity implements OnPersonCreated {
         startActivity(intent);
         finish();
     }
+
 /*
     private void logout(){
         Intent intent = new Intent(this,LoginActivity.class);

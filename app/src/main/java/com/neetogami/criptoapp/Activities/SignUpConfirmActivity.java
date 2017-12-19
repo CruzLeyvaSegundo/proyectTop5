@@ -13,10 +13,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserCodeDeliveryDetails;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.GenericHandler;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.VerificationHandler;
+import com.neetogami.criptoapp.Interfaces.WebServicesAWS;
+import com.neetogami.criptoapp.Models.User;
 import com.neetogami.criptoapp.R;
 import com.neetogami.criptoapp.Utils.AppHelper;
 
@@ -27,6 +33,7 @@ public class SignUpConfirmActivity extends AppCompatActivity {
     private Button confirm;
     private TextView reqCode;
     private String userName;
+    private String nameUser;
     private AlertDialog userDialog;
 
 
@@ -63,6 +70,7 @@ public class SignUpConfirmActivity extends AppCompatActivity {
         if (extras !=null) {
             if(extras.containsKey("name")) {
                 userName = extras.getString("name");
+                nameUser = extras.getString("nameUser");
                 username = (EditText) findViewById(R.id.editTextConfirmUserId);
                 username.setText(userName);
 
@@ -195,6 +203,25 @@ public class SignUpConfirmActivity extends AppCompatActivity {
     GenericHandler confHandler = new GenericHandler() {
         @Override
         public void onSuccess() {
+            Retrofit retrofit;
+            WebServicesAWS webService;
+            retrofit= new Retrofit.Builder()
+                    .baseUrl("https://jw67nf8i8h.execute-api.us-east-1.amazonaws.com/prod/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+            webService = retrofit.create(WebServicesAWS.class);
+            User usr= new User(userName,nameUser);
+            Call<String> callPostUser = webService.setUser(usr);
+            callPostUser.enqueue(new Callback<String>(){
+                public void onFailure(Call<String> call, Throwable t) {
+                    // TODO Auto-generated method stub
+                    System.out.println("error al consumir la api" + t );
+                }
+                public void onResponse(Call<String> call, Response<String> response) {
+                    // TODO Auto-generated method stub
+                        System.out.println("Insert completo");
+                }
+		    });
             showDialogMessage("Success!",userName+" has been confirmed!", true);
         }
 
